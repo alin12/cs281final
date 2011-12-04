@@ -1,0 +1,96 @@
+\documentclass[letterpaper, 11pt]{article}
+\usepackage[left=1.2in,top=1.2in,right=1.2in,bottom=1.2in]{geometry}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\fancyhead[L]{\author}
+\fancyhead[C]{\class \;-- \assignment}
+\fancyhead[R]{\today}
+\renewcommand{\footrulewidth}{0.5pt}
+\pagestyle{fancy}
+\usepackage{palatino}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{algorithm2e} 
+\usepackage{setspace}
+\setlength{\parindent}{1.5cm}
+
+\renewcommand{\author}{Andrew Lin and Zhuo Yang}
+\newcommand{\class}{CS 281}
+\newcommand{\assignment}{Final}
+
+\newtheorem*{claim}{Claim}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{cor}{Corollary}
+\theoremstyle{definition}
+\newtheorem*{define}{Definition}
+\newtheorem*{notate}{Notation}
+\newtheorem*{ex}{Example}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\dprod}{\displaystyle\prod}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\ti}{\;\;\makebox[0pt]{$\top$}\makebox[0pt]{$\cap$}\;\;}
+\newcommand{\m}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\def\indep{\perp\!\!\!\perp}
+\newcommand{\E}{\text{E}}
+\newcommand{\lf}{\left}
+\newcommand{\rt}{\right}
+\newcommand{\var}{\text{Var}}
+\newcommand{\f}{\frac}
+\newcommand{\p}{\partial}
+
+\newcommand{\gen}[1]{\left\langle#1\right\rangle}
+\newcommand{\setfontsize}{\fontsize{9}{11}\selectfont}
+\newcommand{\eqn}[2]{\begin{equation}#1\label{#2}\end{equation}}
+\newcommand{\eqnn}[1]{\begin{equation*}#1\end{equation*}}
+\newcommand{\enu}[1]{{\setlength{\leftmargini}{16pt}\begin{enumerate}#1\end{enumerate}}}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\newcommand{\al}[1]{\begin{align*}#1\end{align*}}
+
+\newcommand{\probnum}{}
+\newcounter{prob_num}
+\setcounter{prob_num}{0}
+\newenvironment{prob}[1][\arabic{prob_num}]
+{\stepcounter{prob_num}
+\renewcommand{\probnum}{#1}
+\section*{\normalsize{\textsc{Problem}} \probnum.}}
+
+\doublespace
+
+\begin{document}
+
+\section*{Final Project Proposal}
+
+	GPS is known to be rather accurate for outside locations, but not for locations within buildings or even within areas with a lot of buildings (i.e. lower Manhattan). In this project, our goal will be to enhance the accuracy of absolute position estimates using WiFi signal data. This will involve inference on WiFi signal strengths using Gaussian process latent variable models (GP-LVM). In combining these two modes of location tracking, we will try to produce an application that results in more accurate positioning. Currently GPS is only accurate to around 40 ft indoors, but within around 5 ft outdoors. Success will be gauged by narrowing this margin of error as much as possible. \\ 
+
+One of the base algorithms we will need to implement is that of WiFi-SLAM (Simultaneous Localization and Mapping) techniques, which use GP-LVM to solve the WiFi localization problem. The data that we will be using in this portion will be high dimensional data corresponding to the signal strength information for all WiFi access points in an environment. GP-LVMs essentially map this high dimensional data to low dimensional space. There are simpler dimension reduction methods that have been attempted (i.e. PCA), but because of the non-linearity in the data, they tend to perform poorly. \\
+
+The following assumptions are made about the model: 
+
+\begin{enumerate}
+	\item[1.] Locations that are near each other have similar signal strength measurements. 
+	\item[2.] Similar signal strengths indicate that two locations are near each other. 
+	\item[3.] Locations that follow sequentially in the data stream should be close to each other. 
+\end{enumerate}
+
+
+There are several challenges with the approach here, one being computational power and the other being a signature uniqueness assumption in the most common form of WiFi-SLAM (which restricts the application to signal rich environments). \\
+
+After implementing WiFi-SLAM, we can represent GPS data as a Gaussian distribution and combine that with the distributions of WiFi signals to formulate a more accurate inference of location. \\
+
+To gather data, we will be gathering location based information from the phone application Glassmap. This phone application gives nearly live GPS locations, and has a framework set for sending WiFi signal data as well. 
+
+\end{document}
